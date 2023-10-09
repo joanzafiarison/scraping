@@ -1,0 +1,4 @@
+.scrapy/
+.pytest_cache/
+notes/
+.env

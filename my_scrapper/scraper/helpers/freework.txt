@@ -1,0 +1,48 @@
+Mission freelance
+Développeur Fullstack React / Node / AWS
+Paris
+FREELANCEREPUBLIK
+
+
+Publiée le 28/02/2023 - Mise à jour le 06/04/2023
+Partager cette offre
+
+
+3 jours de présentiel sur Paris non négociable /
+
+
+Dans le cadre de cette mission, vous travaillerez sur le développement d’un ERP qui sera ensuite intégré dans l’ensemble des cabinets du groupe d’ici fin 2023. Vous travaillerez notamment sur la création d’un nouveau parcours utilisateur ainsique que sur l’intégration de l’ERP au sein des cabinets.
+
+La DSI se divise en 8 équipes, chacune composé de 6/7 développeurs. Ils fonctionnent en méthode Scrum.
+
+Vos principales missions seront les suivantes :
+Participer à la stratégie de création d’API à partir des besoins exprimés
+Participer à la définition d’architecture micro-services
+Participer à la conception et au développement d’API pérennes et sécurisées pour le développement d’un ERP international
+L’apport d’expertise sur des sujets relatifs à la sécurité, la conception d’API, la définition de best practices, les tests
+Intervenir sur le développement et l’intégration Front des applications web et mobiles
+Veiller au respect des meilleures pratiques en termes d’expérience utilisateur
+Travailler en collaboration avec l’équipe UX/UI Designer et s’assurer de la bonne intégration des maquettes
+Le support au déploiement des solutions
+La rédaction des documents de référence (bestpractices)
+
+Stack :
+Back-End : Node.js, Express.js, Nest.js, TypeScript, Jest, GraphQL, MongoDB, Mongoose, PostgreSQL, Docker, API REST, AWS
+Front-End : ReactJS, ContextAPI, Webpack, HTML/CSS, Communication avec des API REST, ReactHooks, Cypress
+Intégration continue : GitLab, GitlabCI
+Gestion de projet : JIRA, Confluence
+Autres outils : Slack, Invision, Zeplin, Make, Storybook (pour documenter les composants React atomiques)
+Profil du candidat
+Nous sommes à la recherche d’un développeur Node/React orienté back pour l’un de nos clients.
+
+3 jours de présentiel sur Paris non négociable.
+Description de l'entreprise
+FreelanceRepublik : Sélection restreinte de freelances tech qualifiés et disponibles.
+
+Le top 15 des freelances tech est sur FreelanceRepublik. Arrêtez de perdre du temps.
+En temps réel, nous identifions le top 15 des développeurs et chefs de projets, que nous positionnons sur un pipeline d’une centaine de missions.
+Découvrir FREELANCEREPUBLIK
+Levallois-Perret, Île-de-France
+100 - 249 salariés
+Sourcing / chasseur de têtes
+FreelanceRepublik : Sélection restreinte de freelances tech qualifiés et disponibles. Le top 15% des freelances tech est sur FreelanceRepublik. Arrêtez de perdre du temps. En temps réel, nous identifions le top 15% des développeurs et chefs de projets, que nous positionnons sur un
