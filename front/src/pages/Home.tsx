@@ -11,8 +11,8 @@ const dash_data = {
     "passed" : 300
   },
   "graph" : {
-    "week" : [4, 5, 6 , 10],
-    "month" : [10, 20 , 34, 50]
+    "week" : ["4", "5", "6" , "10"],
+    "month" : ["10", "20", "34", "50"]
   },
   "performance" : {
     "url" : 18268,
@@ -26,12 +26,12 @@ function Home() {
     //fetch dash data
   },[])
   return (
-    <div style={{padding : 10, backgroundColor:"#D8D6D4", borderRadius: 10}}>
+    <div style={{display : "flex", flexDirection : "column", justifyContent : "space-around", padding : 10, backgroundColor:"#D8D6D4"}}>
         <div style={{display :"flex", justifyContent :"space-around"}}>
             <ResultCard result={dash_data.result}/>
             <Graph graph={dash_data.graph}/>
         </div>
-        <PerfCards perf={dash_data.performance}/>
+        <PerfCards performance={dash_data.performance}/>
     </div>
   )
 }

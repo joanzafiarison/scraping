@@ -1,8 +1,18 @@
 import React from 'react'
 
-function ResultCard({result}) {
+
+type ResultItem = {
+  result : {
+    m1 : number,
+    m2 : number,
+    found : number,
+    passed : number
+  }
+}
+
+function ResultCard( { result } : ResultItem ) {
   return (
-    <div style={{backgroundColor:"#8D7373",  borderRadius : 10, padding :10, color : "black"}}>
+    <div style={{backgroundColor:"#8D7373",  borderRadius : 10, padding :10, minWidth : "12rem", color : "black"}}>
         <p>Collection X</p>
         <div style={{display :"flex", justifyContent : "center"}}>
             <p>{result.m1}%</p>

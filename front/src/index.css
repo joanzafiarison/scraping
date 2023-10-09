@@ -79,6 +79,7 @@ header {
   flex-direction: column;
   height:100vh;
   min-width:25vw;
+  padding-top: 2rem;
 }
 
 li {

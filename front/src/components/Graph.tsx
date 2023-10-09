@@ -1,9 +1,17 @@
-import React from 'react';
+import React , {Component} from 'react';
 
 
-function Graph({graph}) {
+type GraphData = {
+  graph : {
+    week : string[],
+    month : string[]
+  }
+
+}
+
+function Graph({graph}  : GraphData) {
   return (
-    <div style={{backgroundColor:"#95CFD9",  borderRadius : 10, padding :10}}>
+    <div style={{backgroundColor:"#95CFD9",  borderRadius : 10, padding :10, minWidth : "10rem"}}>
         <div style={{display :"flex"}}>
             <div style={{display : "flex"}}>
                 <p>Sites</p>
