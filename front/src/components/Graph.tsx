@@ -11,7 +11,7 @@ type GraphData = {
 }
 
 function Graph({graph}  : GraphData) {
-  const [timeline, setTimeline ] =useState("week");
+  const [timeline, setTimeline ] =useState("month");
   const [type, setType] = useState("lang")
 
   const svgRef = useRef(null);
@@ -20,30 +20,31 @@ function Graph({graph}  : GraphData) {
     console.log("effect", graph[timeline])
 
     if(timeline && svgRef.current ){
-
       const svg = d3.select(svgRef.current);
       
       
       //bind d3 data
       const update =  svg.selectAll("rect")
+                          .append("g")
                           .data(graph[timeline])
 
+    
       //Display D3 data
       update.enter()
             .append('text')
-            .attr('x', (d, i) => i * 70)
-            .attr('y', 40)
+            .attr('x', (d, i) => i * 50)
+            .attr('y', 250)
             .style('font-size', 24)
             .text((d: number) => d);
       
       //make bars     
       update.enter()
             .append("rect")
-            .attr("x", (d, i) => i * 70)
-            .attr("y", 0)
-            .attr("width", 65)
-            .attr("height", (d, i) => d)
-            .attr("fill", "green");
+            .attr("x", (d, i) => i * 50)
+            .attr("y", (d, i) => 200 - 5 *d)
+            .attr("width", 45)
+            .attr("height", (d, i) => d * 5)
+            .attr("fill", "green")
 
       //remove
       update.exit()
@@ -76,7 +77,7 @@ function Graph({graph}  : GraphData) {
         <svg 
             id="graph"
             width={300}
-            height={200}
+            height={300}
             ref={svgRef}
         />
         
