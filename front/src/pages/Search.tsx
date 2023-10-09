@@ -10,7 +10,8 @@ function Search() {
         <ul style={{display:"flex"}}>
           {["marque", "reference", "produit", "categorie"].map(el =>(
             <li className="filter">
-              {el}
+              <div className="square"></div>
+              <p>{el}</p>
             </li>
           ))}
         </ul>
@@ -19,13 +20,13 @@ function Search() {
         <div>
           {[{"name": "Acer XE456"},{"name": "IMac"},{"name": "BledAir"}].map((prd) => (
             <div className="product_line">
-              <p>{prd.name}</p>
+              <p style={{margin:5}}>{prd.name}</p>
               <button>Details</button>
-              <p>X times</p>
+              <p style={{margin:5}}>X times</p>
             </div>
           ))}
         </div>
-        <button style={{alignSelf:"flex-end"}}>Exporter</button>
+        <button style={{alignSelf:"flex-end", margin:"1rem"}}>Exporter</button>
       </div>
     </div>
   )

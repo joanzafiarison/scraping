@@ -40,20 +40,32 @@
 }
 
 .box {
-    padding : 10px;
+    padding-top : 5rem;
     background-color: #D8D6D4;
     border-radius: 10px
 }
 
 .filter {
   list-style-type: none;
-  padding :10px;
+  padding :10px 20px;
   background-color: white;
-  color :blue;
   border-radius :10px;
+  border : 1px solid black;
   margin :10px;
   min-height:40px;
   min-width:40px;
+}
+
+.filter p {
+  font-size: 11px;
+  color :black;
+}
+
+.square {
+  background-color: green;
+  width :25px;
+  height:25px;
+  margin :auto;
 }
 
 .main_container {
@@ -69,4 +81,38 @@
   padding :5px;
   margin:1rem;
   border-radius :5px;
+}
+
+/*TYPO */
+
+.logo_title {
+  font-size: 18px;
+  color : black;
+}
+
+.nav_title {
+  font-size :16px;
+  color:black;
+  margin : 1rem;
+}
+
+.nav_title:hover {
+  background-color: #DADADA ;
+}
+
+.subtitle {
+  font-size :16px;
+  font-weight:800;
+}
+
+.metric {
+  font-size: 18px;
+  font-weight: 800;
+  margin :0px;
+}
+
+.metric_detail {
+  font-size: 11px;
+  font-weight: 200;
+  margin :0px;
 }

@@ -13,10 +13,16 @@ type ResultItem = {
 function ResultCard( { result } : ResultItem ) {
   return (
     <div style={{backgroundColor:"#8D7373",  borderRadius : 10, padding :10, minWidth : "12rem", color : "black"}}>
-        <p>Collection X</p>
-        <div style={{display :"flex", justifyContent : "center"}}>
-            <p>{result.m1}%</p>
-            <p>{result.m2}%</p>
+        <p className="subtitle">Collection X</p>
+        <div style={{display :"flex", justifyContent : "space-around", margin :"1.5rem"}}>
+            <div>
+              <p className="metric">{result.m1}%</p>
+              <p className="metric_detail">accuracy</p>
+            </div>
+            <div>
+              <p className="metric">{result.m2}%</p>
+              <p className="metric_detail">recognition</p>
+            </div>
         </div>
         <p>Item Found {result.found}</p>
         <p>Test passed {result.passed}</p>

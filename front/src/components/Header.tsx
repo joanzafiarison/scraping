@@ -1,10 +1,10 @@
-import React from 'react'
+import React from 'react';
 import { Link } from 'react-router-dom'
 
 function Header() {
   return (
     <header>
-        <h1 style={{fontSize :14, color : "black"}}><Link to="/">Scraping Hub</Link></h1>
+        <Link to="/"><h1 className="logo_title">Scraping Hub</h1></Link>
         <div>
             <div style={{display :"flex", justifyContent:"center", margin:"2rem"}}>
                 <Link to="/profile">
@@ -18,10 +18,18 @@ function Header() {
 
             <nav style={{display :"flex", alignItems: "center", margin :"0.5rem"}}>
                 <ul style={{margin :0}}>
-                    <li style={{fontSize : 10, margin:"0.5rem"}}><Link to="/profile">Paramètres</Link></li>
-                    <li style={{fontSize : 10, margin:"0.5rem"}}><Link to="/operations">Opérations</Link></li>
-                    <li style={{fontSize : 10, margin:"0.5rem"}}><Link to="/search">Recherche</Link></li>
-                    <li style={{fontSize : 10, margin:"0.5rem"}}><Link to="/builder">Builder</Link></li>
+                    <Link to="/profile">
+                        <li className="nav_title">Paramètres</li>
+                    </Link>
+                    <Link to="/operations">
+                        <li className="nav_title">Opérations</li>
+                    </Link>
+                    <Link to="/search">
+                        <li className="nav_title">Recherche</li>
+                    </Link>
+                    <Link to="/builder">
+                        <li className="nav_title">Builder</li>
+                    </Link>
                 </ul>
             </nav>
         </div>

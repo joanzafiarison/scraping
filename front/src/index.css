@@ -1,5 +1,5 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Inria Sans", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -37,11 +37,11 @@ h1 {
 button {
   border-radius: 8px;
   border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
+  padding: 0.6em 0.8em;
+  font-size: 0.8em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #85B3DD;
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -51,6 +51,10 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+.secondary {
+  background-color: #AD4242;
 }
 
 @media (prefers-color-scheme: light) {
@@ -84,4 +88,11 @@ header {
 
 li {
   list-style-type : none;
+}
+
+input[type="text"] {
+  box-shadow: 1px 1px 1px #807878;
+  border :none;
+  background-color: white;
+  margin  :0.5rem;
 }
