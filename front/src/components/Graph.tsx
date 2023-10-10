@@ -20,35 +20,41 @@ function Graph({graph}  : GraphData) {
     console.log("effect", graph[timeline])
 
     if(timeline && svgRef.current ){
-      const svg = d3.select(svgRef.current);
+      const group = d3.select(svgRef.current);
       
       
       //bind d3 data
-      const update =  svg.selectAll("rect")
-                          .append("g")
+      const update =  group.selectAll("g")
                           .data(graph[timeline])
 
-    
-      //Display D3 data
-      update.enter()
-            .append('text')
-            .attr('x', (d, i) => i * 50)
-            .attr('y', 250)
-            .style('font-size', 24)
-            .text((d: number) => d);
-      
-      //make bars     
-      update.enter()
-            .append("rect")
-            .attr("x", (d, i) => i * 50)
-            .attr("y", (d, i) => 200 - 5 *d)
-            .attr("width", 45)
-            .attr("height", (d, i) => d * 5)
-            .attr("fill", "green")
+      //créer des entrées 
+      const enter = update.enter().append("g");
+
+      enter.append("rect");
+      enter.append("text");
+
+      //merge les entrées et l'update    
+      const bars = update.merge(enter)
+
+      //création des bars
+      bars
+          .select("rect")
+          .attr("x", (d, i) => i * 50)
+          .attr("y", (d, i) => 200 - 5 *d)
+          .attr("width", 45)
+          .attr("height", (d, i) => d * 5)
+          .attr("fill", "green")
+
+       //Création des labels
+      bars
+          .select("text")
+          .attr('x', (d, i) => i * 50)
+          .attr('y', 250)
+          .style('font-size', 24)
+          .text((d: number) => d);
 
       //remove
-      update.exit()
-            .remove()
+      update.exit().remove()
       
       
     }
