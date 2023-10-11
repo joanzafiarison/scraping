@@ -1,11 +1,11 @@
 
-from flask import Flask , render_template 
+from flask import Flask , send_from_directory
 from markupsafe import escape
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../front/dist/assets')
 
 @app.route("/")
 def hello_world():
-    return "<p>Hello, World! </p>"
+    return send_from_directory("../front/dist",'index.html')
 
 #Results   results/<ID-category>?date=""&ORD="asc"
 @app.route("/results/<int:category_id>") #/date=<datetime>&ord=<order>"

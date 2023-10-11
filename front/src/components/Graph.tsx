@@ -82,7 +82,7 @@ function Graph({graph}  : GraphData) {
         </div>
         <svg 
             id="graph"
-            width={300}
+            width={200}
             height={300}
             ref={svgRef}
         />
@@ -91,4 +91,4 @@ function Graph({graph}  : GraphData) {
   )
 }
 
-export default Graph
+export default Graph;
