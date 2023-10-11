@@ -1,0 +1,1 @@
+'''Function that takes CSV and use SQL connection to add in DB'''
