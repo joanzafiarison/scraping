@@ -3,7 +3,16 @@ from flask import Flask , send_from_directory , current_app, request, abort
 from markupsafe import escape
 import os
 
+from model.db import db
+
 app = Flask(__name__, static_folder='../front/dist/assets')
+
+# configure the SQLite database, relative to the app instance folder
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
+# initialize the app with the extension
+db.init_app(app)
+
+print("init db",db)
 
 #Ajout d'une clé secrete pour signer JWT
 SECRET_KEY = os.environ.get("SECRET_KEY")
