@@ -2,10 +2,13 @@ from functools import wraps
 import jwt
 from flask import request, abort
 from flask import current_app
+from model.schema import User
+from model.db import db
 
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
+        print("headers",request.headers)
         token = None
         if "Authorization" in request.headers:
             token = request.headers["Authorization"].split(" ")[1]
@@ -17,7 +20,8 @@ def token_required(f):
             }, 401
         try : 
             data = jwt.decode(token, current_app.config["SECRET_KEY"], algorithms=["HS256"])
-            current_user= models.User().get_by_id(data["user_id"])
+            #recherche si user existe sinon 404
+            current_user= db.get_or_404(User, data["user_id"])
             if current_user is None :
                 return {
                     "message" : "Invalid Authentication token!",
