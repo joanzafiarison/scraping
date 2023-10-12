@@ -1,7 +1,15 @@
 
-from flask import Flask , send_from_directory
+from flask import Flask , send_from_directory , current_app, request, abort
 from markupsafe import escape
+import os
+
 app = Flask(__name__, static_folder='../front/dist/assets')
+
+#Ajout d'une clé secrete pour signer JWT
+SECRET_KEY = os.environ.get("SECRET_KEY")
+print(SECRET_KEY)
+
+app.config["SECRET_KEY"] = SECRET_KEY
 
 @app.route("/")
 def hello_world():
