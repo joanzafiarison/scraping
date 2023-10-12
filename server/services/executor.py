@@ -1,4 +1,5 @@
 import subprocess 
+from services.my_scrapper.scraper.run import run_crawler
 
 
 def execute_command():
@@ -18,3 +19,9 @@ def execute_command():
             for output in process.stdout.readlines():
                 print(output.strip())
             break
+
+def run_scraper():
+    try :
+        run_crawler()
+    except :
+        return "crawl Error"

@@ -6,7 +6,7 @@ import os
 from model.schema import User
 from model.db import db
 
-from services.executor import execute_command
+from services.executor import execute_command, run_crawler
 
 from middlewares.auth_middleware import token_required
 import jwt
@@ -43,7 +43,8 @@ def perform_job(job_id):
     if len(users) == 1 :
         try :
             #asynchrone
-            execute_command()
+            #execute_command()
+            run_crawler()
             return f"perform job id {escape(job_id)} for user {users[0].username}"
         except :
             return "Server unavailable"

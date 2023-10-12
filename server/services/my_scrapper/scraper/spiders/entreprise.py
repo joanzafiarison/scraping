@@ -1,6 +1,6 @@
 import scrapy
 from scrapy.loader import ItemLoader
-from my_scrapper.items import EntrepriseItem
+from services.my_scrapper.scraper.items import EntrepriseItem
 
 class Sitemap():
     def __init__(self):
