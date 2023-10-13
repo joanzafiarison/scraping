@@ -1,1 +1,1 @@
-flask --app run index --debug => start the app
+flask --app index run --debug => start the app

@@ -11,6 +11,10 @@ from services.executor import execute_command, run_crawler
 from middlewares.auth_middleware import token_required
 import jwt
 
+from queue import Queue, Empty
+from threading import Thread
+from time import sleep
+
 app = Flask(__name__, static_folder='../front/dist/assets')
 
 # configure the SQLite database, relative to the app instance folder
@@ -21,6 +25,28 @@ db.init_app(app)
 
 with app.app_context():
     db.create_all()
+
+commands = Queue()
+
+def process_loop():
+    while True:
+        try: 
+            command = commands.get_nowait()
+            print("command",command)
+            if command["test"] == "success":
+                print("success of ",command["job_id"])
+            elif command["test"] == "cancel" :
+                print("cancel of ",command["job_id"])
+            else :
+                print("no test for ",command["job_id"])
+        except Empty :
+            pass
+        sleep(5)
+
+#start process in another loop
+t1 = Thread(target=process_loop, daemon = True)
+t1.start()
+
 
 #Ajout d'une clé secrete pour signer JWT
 SECRET_KEY = os.environ.get("SECRET_KEY")
@@ -39,12 +65,15 @@ def perform_job(job_id):
     #lancer le scraping
     email = request.form["email"]
     user_id = request.form["user_id"]
+    isTest= request.form["test"]
+
     users = db.session.execute(db.select(User).where(User.email == email)).scalars().all()
     if len(users) == 1 :
         try :
             #asynchrone
             #execute_command()
-            run_crawler()
+            #run_crawler()
+            commands.put_nowait({'action' : 'scraping', 'struct' :842, 'job_id' :job_id , "test": isTest })
             return f"perform job id {escape(job_id)} for user {users[0].username}"
         except :
             return "Server unavailable"
