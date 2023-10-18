@@ -17,7 +17,8 @@ from threading import Thread
 from time import sleep
 
 
-UPLOAD_FOLDER="/files"
+UPLOAD_FOLDER= os.path.join(os.getcwd(),"files")
+print("up",UPLOAD_FOLDER)
 ALLOWED_EXTENSIONS = {'txt','csv','json'}
 app = Flask(__name__, static_folder='../front/dist/assets')
 
