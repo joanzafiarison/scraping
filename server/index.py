@@ -1,9 +1,10 @@
 
-from flask import Flask , send_from_directory , jsonify , request
+from flask import Flask , send_from_directory , jsonify , request 
+from werkzeug.utils import secure_filename
 from markupsafe import escape
 import os
 
-from model.schema import User
+from model.schema import User , Struct , ResultJob, Job
 from model.db import db
 
 from services.executor import execute_command, run_crawler
@@ -15,8 +16,12 @@ from queue import Queue, Empty
 from threading import Thread
 from time import sleep
 
+
+UPLOAD_FOLDER="/files"
+ALLOWED_EXTENSIONS = {'txt','csv','json'}
 app = Flask(__name__, static_folder='../front/dist/assets')
 
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # configure the SQLite database, relative to the app instance folder
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
 # initialize the app with the extension
@@ -28,6 +33,9 @@ with app.app_context():
 
 commands = Queue()
 
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.',1)[1].lower() in ALLOWED_EXTENSIONS
+
 def process_loop():
     while True:
         try: 
@@ -38,7 +46,8 @@ def process_loop():
             elif command["test"] == "cancel" :
                 print("cancel of ",command["job_id"])
             else :
-                print("no test for ",command["job_id"])
+                print("run crawler ",command["job_id"])
+                run_crawler()
         except Empty :
             pass
         sleep(5)
@@ -102,7 +111,21 @@ def get_jobs(category_id):
 @app.route("/job", methods=["POST"])
 @token_required
 def create_job(job_id):
-    return f"Create job id {escape(job_id)} due to XX"
+    due_date = request.form["due_date"]
+    file_data = request.files["file"]
+    jobs = db.session.execute(db.select(Job).where(Job.due_date == due_date)).scalars().all()
+    if len(jobs) == 0 :
+        job = Job (
+            due_date = due_date,
+            filepath = file_data
+        )
+        db.session.add(job)
+        db.session.commit()
+        return f"Create job id {escape(job_id)} due to {due_date}"
+    else :
+        return f'Error creating a JOb'
+
+    
 
 @app.route("/job/<int:job_id>")
 @token_required
@@ -120,6 +143,18 @@ def delete_job(job_id):
     return f"Delete Job {escape(job_id)} after XX"
 
 #>>Add blueprint
+
+
+@app.route("/structs", methods=["GET"])
+def get_html_structs():
+    structs = db.session.execute(db.select(Struct)).scalars().all()
+    if len(structs) > 1 :
+        print(structs)
+        return  f'fichiers structures créés {", ".join([struct.filepath for struct in structs])}'
+    else : 
+        return "no struct found"
+
+    
 #Structure  struc/<ID-Map> 
 @app.route("/struct/<int:map_id>", methods=["GET"])
 @token_required
@@ -128,21 +163,50 @@ def get_html_struct(map_id):
 
 #create
 @app.route("/struct", methods=["POST"])
-@token_required
+#@token_required
 def create_html_struct():
-    return "creating struct"
+    name = request.form["name"]
+    category=request.form["category"]
+    
+    #check if we have a file
+    #ImmutableMultiDict([('files', <FileStorage: 'airpod.png' ('image/png')>)])
+    if "file" in request.files :
+        file_data = request.files["file"]
+        print("f data ",file_data)
+        structs = db.session.execute(db.select(Struct).where(Struct.name == name)).scalars().all()
+        if len(structs) == 0 :
+            filename = secure_filename(file_data.filename)
+            struct = Struct(
+                name= name,
+                category = category,
+                filepath = filename
+            )
+            #save file in upload folder
+            try :
+                file_data.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            except Exception as e :
+                print('File error', e)
+            db.session.add(struct)
+            db.session.commit()
+            return f" struct {name} created"
+        else :
+            return f'error creating struct {name}'
+    else : 
+        return f'no file provided'
+
+  
 
 #delete
 @app.route("/struct/<int:map_id>", methods=["DELETE"])
 @token_required
 def delete_html_struct(map_id):
-    return f"Structure id {escape(map_id)}"
+    return f"delete Structure id {escape(map_id)}"
 
 #update
 @app.route("/struct/<int:map_id>", methods=["PUT"])
 @token_required
 def update_html_struct(map_id):
-    return f"Structure id {escape(map_id)}"
+    return f"update Structure id {escape(map_id)}"
 
 
 
