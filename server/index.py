@@ -19,7 +19,7 @@ from time import sleep
 import json
 
 
-UPLOAD_FOLDER= os.path.join(os.getcwd(),"files")
+UPLOAD_FOLDER= os.path.join(os.getcwd(),"server/files")
 ALLOWED_EXTENSIONS = {'txt','csv','json'}
 app = Flask(__name__, static_folder='../front/dist/assets')
 
@@ -70,6 +70,14 @@ def hello_world():
 
 
 ''' Job id , user id, '''
+@app.route("/perform", methods=["POST"])
+def perform():
+    url = request.form["url"]
+    sitemap = request.form["sitemap"]
+    model = request.form["model"]
+
+    return "performing"
+
 @app.route("/perform/<int:job_id>", methods=["POST"])
 def perform_job(job_id):
     #si le job_id est associé a l'user id
@@ -188,11 +196,9 @@ def create_category():
 def get_html_structs():
     structs = db.session.execute(db.select(Struct)).scalars().all()
     if len(structs) > 1 :
-        print(structs)
         #return  f'fichiers structures créés {", ".join([struct.name for struct in structs])}'
         return jsonify(
-            id = structs[4].id,
-            name = structs[4].name
+         struct = structs
         )
     else : 
         return "no struct found"
@@ -204,10 +210,12 @@ def get_html_structs():
 def get_html_struct(map_id):
     structs = db.session.execute(db.select(Struct).where(Struct.id == map_id)).scalars().all()
     if len(structs) == 1 :
+        f = open(structs[0].filepath,"r")
+        data = json.load(f)
         return jsonify(
             id = structs[0].id,
             name = structs[0].name,
-            filepath = structs[0].filepath
+            data= data
         )
     return f'Id {map_id} not found'
 
@@ -223,11 +231,15 @@ def create_html_struct_by_data():
         #convert to string
         sitemap_data = json.dumps(metadata, indent=4)
         #writing to file
-        filepath = f"{app.config['UPLOAD_FOLDER']}/{name}.json"
+    except Exception as e :
+        return "JSON error"
+    
+    try : 
+        filepath = f"{app.config['UPLOAD_FOLDER']}/structs/{name}.json"
         with open(filepath , "w") as struct_file :
             struct_file.write(sitemap_data)
     except Exception as e :
-        return "JSON error"
+        return "File error"
 
     print(metadata)
     #check if category name exists
@@ -265,14 +277,15 @@ def create_html_struct_by_file():
         structs = db.session.execute(db.select(Struct).where(Struct.name == name)).scalars().all()
         if len(structs) == 0 :
             filename = secure_filename(file_data.filename)
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], f"structs/{filename}")
             struct = Struct(
                 name= name,
                 category = category,
-                filepath = filename
+                filepath = filepath
             )
             #save file in upload folder
             try :
-                file_data.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                file_data.save(filepath)
             except Exception as e :
                 print('File error', e)
             db.session.add(struct)
@@ -287,14 +300,25 @@ def create_html_struct_by_file():
 
 #delete
 @app.route("/struct/<int:map_id>", methods=["DELETE"])
-@token_required
+#@token_required
 def delete_html_struct(map_id):
+    struct = db.session.execute(db.select(Struct).where(Struct.id == map_id)).scalars().all()
+    if len(struct) == 1 : 
+        db.session.delete(struct[0])
+        db.session.commit()
     return f"delete Structure id {escape(map_id)}"
 
 #update
 @app.route("/struct/<int:map_id>", methods=["PUT"])
-@token_required
 def update_html_struct(map_id):
+    name = request.form["name"]
+    #get keys
+    struct = db.session.execute(db.select(Struct).where(Struct.id == map_id)).scalars().all()
+    db.session.commit()
+    if len(struct) == 1 :
+        struct[0].name = name 
+        #db.session.update(struct[0]).values(name=name)
+        db.session.commit()
     return f"update Structure id {escape(map_id)}"
 
 
