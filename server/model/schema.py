@@ -10,12 +10,22 @@ class User(db.Model):
     password : Mapped[str] = mapped_column(db.String)
     role : Mapped[str] = mapped_column(db.String)
 
+#Structures
 class Struct(db.Model):
     __tablename__ ="structs"
     id : Mapped[int] = mapped_column(db.Integer, primary_key=True)
     name : Mapped[str] = mapped_column(db.String, unique=True, nullable=False)
     filepath : Mapped[str] = mapped_column(db.String, unique=True)
     category : Mapped[int] = mapped_column(db.Integer)
+
+class Category(db.Model):
+    __tablename__ = "category"
+    id : Mapped[int] = mapped_column(db.Integer, primary_key=True)
+    name : Mapped[str] = mapped_column(db.String)
+    #filepath : Mapped[str] = mapped_column(db.String)
+
+
+#JOB
 
 class Job(db.Model):
     __tablename__ ="jobs"
@@ -29,7 +39,19 @@ class ResultJob(db.Model):
     job_id : Mapped[int] = mapped_column(db.Integer)
     filepath : Mapped[str] = mapped_column(db.String)
 
-class Category(db.Model):
-    __tablename__ = "category"
-    id : Mapped[int] = mapped_column(db.Integer, primary_key=True)
-    name : Mapped[str] = mapped_column(db.String)
+
+
+''' => Modalisation de models avec Mongo
+    'job_id': {
+        'type': 'string',
+        'minlength': 1,
+        'required': True,
+        'coerce': str.capitalize
+    },
+    'filepath': {
+        'type': 'string',
+        'minlength': 1,
+        'required': True,
+        'coerce': str.capitalize
+    }
+'''

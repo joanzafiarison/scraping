@@ -6,28 +6,28 @@ class Sitemap():
     def __init__(self):
         pass 
     def getSitemap(self,name):
+        #Find sitemap by id
         data = None
         if name == "verif.com":
             data = {
-                "multi":"//table[@id='verif_hitparade_donnees']//tr",
-                "single" :"//table[@class='infoGen']",
-                "link":"td[@class='verif_col1']/a/@href",
+                "multi":"//div[contains(@class,'MuiBox-root') and contains(@class, 'css-1i3apa5') ]//tr",
+                "single" :"//div[contains(@class,'MuiBox-root') and contains(@class, 'css-1wa5w4v')]",
+                "link":"td/a/@href",
                 "base_url":"https://www.verif.com",
-                "name":"//h1[@class='title']/text()",
-                "adress":"//td[contains(text(),'Adresse')]/following-sibling::td//span[@itemprop='streetAddress']/text()",
-                "postal":"//td[contains(text(),'Adresse')]/following-sibling::td//span[@itemprop='postalCode']/text()",
-                "city":"//td[contains(text(),'Adresse')]/following-sibling::td//span[@itemprop='addressLocality']/text()",
-                "code_APE":"//span[@id='verif_fiche.code.naf']/text()",
-                "site":""
+                "name":"//h1[@class='MuiTypography-titleDesktopH1']/text()",
+                "adress":"//td[contains(text(),'Adresse')]/following-sibling::div//span/text()",
+                "code_APE":"//td[contains(text(),'NAF')]/following-sibling::div//span/text()",
+                "site":"//span[contains(@class, 'MuiTypography-bodySmallMedium')  and contains(@class, 'css-1ymqwc8') ]/text()"
             }
         if name == "kompass":
             data = {
                 "multi":"//div[@id='resultatDivId']//div[contains(@class,'prod_list')]",
-                "name":"//h1[@itemprop='name']/text()",
-                "adress":"//p[@class='blockAddress')]/span[@class='spRight']/span/text()",
+                "single" :"//div[contains(@class,  'containerCompany')]",
+                "name":"//h1[@itemprop='name']/span/text()",
+                "adress":"//p[contains(@class,'blockAddress')]/span[contains(@class, 'spRight')]/text()",
                 "postal":"",
                 "city":"",
-                "code_APE":"//p[contains(@class,'activities')]/span/text()",
+                "code_APE":"//table[contains(@class,'tableInfoJuridic')]/tbody/tr/th[contains(text(), 'Activités')]/following-sibling::td/text()",
                 "site":"a[@id='webSite_presentation_0']/@href"
             }
 
