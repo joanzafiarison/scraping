@@ -83,4 +83,10 @@ class EntrepriseItem(scrapy.Item):
     code_APE =  scrapy.Field(
         output_processor = Join()
     )
+
+class ScanItem(scrapy.Item):
+
+    html =  scrapy.Field(
+        output_processor = Join()
+    )
     

@@ -20,8 +20,8 @@ def execute_command():
                 print(output.strip())
             break
 
-def run_scraper():
+def run_scraper(config):
     try :
-        run_crawler()
+        run_crawler(config)
     except :
         return "crawl Error"

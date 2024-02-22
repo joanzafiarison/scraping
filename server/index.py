@@ -7,7 +7,7 @@ import os
 from model.schema import User , Struct , ResultJob, Job, Category
 from model.db import db
 
-from services.executor import execute_command, run_crawler
+from services.executor import execute_command, run_scraper
 
 from middlewares.auth_middleware import token_required
 import jwt
@@ -48,8 +48,9 @@ def process_loop():
             elif command["test"] == "cancel" :
                 print("cancel of ",command["job_id"])
             else :
-                print("run crawler ",command["job_id"])
-                run_crawler()
+                print("run crawler ",command["action"])
+                #print("command ", command)
+                run_scraper(command)
         except Empty :
             pass
         sleep(5)
@@ -73,9 +74,27 @@ def hello_world():
 @app.route("/perform", methods=["POST"])
 def perform():
     url = request.form["url"]
-    sitemap = request.form["sitemap"]
+    sitemap_id = request.form["sitemap_id"]
     model = request.form["model"]
 
+    if sitemap_id != "":
+        #get sitemap
+        #load model? deja dans le sitemap
+        data = {
+            'url' : url,
+            'sitemap_id' : sitemap_id,
+            'model' : model
+        }
+        commands.put_nowait({'action' : 'scraping', 'struct' :842, 'data' : data, 'test' : False})
+        #print("known content",sitemap_id)
+    else : 
+        data = {
+            'url' : url,
+            'sitemap_id' : sitemap_id,
+            'model' : model
+        }
+        commands.put_nowait({'action' : 'scan', 'data' : data, 'test' : False})
+        #print("using model",model)
     return "performing"
 
 @app.route("/perform/<int:job_id>", methods=["POST"])
@@ -160,9 +179,20 @@ def get_categories():
         return " ".join([category.name for category in categories])
     else :
         return "no categories"
+    
+@app.route("/categories/<int:category_id>", methods=["GET"])
+def get_category_by_id(category_id):
+    categories = db.session.execute(db.select(Category).where(Category.id == category_id)).scalars().all()
+    if len(categories) == 1 :
+        return jsonify(
+            name = categories[0].name,
+            filepath = categories[0].filepath
+        )
+    else :
+        return "no categories"
 
 
-@app.route("/category", methods=["DELETE"])
+@app.route("/categories/<int:category_id>", methods=["DELETE"])
 def delete_category():
     name = request.form["name"]
     try :
@@ -172,7 +202,7 @@ def delete_category():
     return f"category {name} deleted"
 
     
-@app.route("/category", methods=["POST"])
+@app.route("/categories/create", methods=["POST"])
 def create_category():
     print("attempt category creation")
     name = request.form["name"]
