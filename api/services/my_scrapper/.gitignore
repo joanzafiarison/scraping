@@ -1,0 +1,6 @@
+.scrapy/
+.pytest_cache/
+__pycache__/
+assets/
+notes/
+.env

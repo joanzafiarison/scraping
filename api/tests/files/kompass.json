@@ -1,0 +1,11 @@
+{
+    "base_url":"https://www.kompass.fr",
+    "multi":"//div[@id='resultatDivId']//div[contains(@class,'prod_list')]",
+    "single" :"//div[contains(@class,  'containerCompany')]",
+    "name":"//h1[@itemprop='name']/span/text()",
+    "adress":"//p[contains(@class,'blockAddress')]/span[contains(@class, 'spRight')]/text()",
+    "postal":"",
+    "city":"",
+    "code_APE":"//table[contains(@class,'tableInfoJuridic')]/tbody/tr/th[contains(text(), 'Activités')]/following-sibling::td/text()",
+    "site":"a[@id='webSite_presentation_0']/@href"
+}

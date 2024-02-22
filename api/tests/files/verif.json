@@ -1,0 +1,10 @@
+{
+    "multi":"//div[contains(@class,'MuiBox-root') and contains(@class, 'css-1i3apa5') ]//tr",
+    "single" :"//div[contains(@class,'MuiBox-root') and contains(@class, 'css-1wa5w4v')]",
+    "link":"td/a/@href",
+    "base_url":"https://www.verif.com",
+    "name":"//h1[@class='MuiTypography-titleDesktopH1']/text()",
+    "adress":"//td[contains(text(),'Adresse')]/following-sibling::div//span/text()",
+    "code_APE":"//td[contains(text(),'NAF')]/following-sibling::div//span/text()",
+    "site":"//span[contains(@class, 'MuiTypography-bodySmallMedium')  and contains(@class, 'css-1ymqwc8') ]/text()"
+}

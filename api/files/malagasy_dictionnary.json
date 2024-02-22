@@ -1,0 +1,6 @@
+{
+    "base_url": "https://tenymalagasy.org/bins/lexicon",
+    "card": "",
+    "search": ".menuLink > form > input",
+    "search_button": ".menuLink > form > input"
+}
